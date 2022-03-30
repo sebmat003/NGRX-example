@@ -8,7 +8,7 @@ export const initialState: EntityState<IProduct> = adapter.getInitialState([]);
 
 export const productsReducer = createReducer(
   initialState,
-  on(ProductActions.getProductList, (state, { products }) => adapter.setAll(products, state)),
+  on(ProductActions.productListLoadSuccessfully, (state, { products }) => adapter.setAll(products, state)),
   on(ProductActions.addProduct, (state, { product }) => adapter.addOne(product, state)),
   on(ProductActions.deleteProduct, (state, { productId }) => adapter.removeOne(productId, state)),
   on(ProductActions.editProduct, (state, { update}) => {

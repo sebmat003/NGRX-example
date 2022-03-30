@@ -1,1 +1,32 @@
-<p>products works!</p>
+<div class="products">
+  <ng-container *ngIf="(products$ | async) as products">
+    <div *ngFor="let product of products" class="product">
+      <ng-container *ngIf="product">
+        <div class="product-actions">
+          <mat-icon>edit</mat-icon>
+          <mat-icon>delete</mat-icon>
+        </div>
+        <div class="product-image" [style.background-image]="'url(/assets/' + product.thumbnail + ''"></div>
+        <div class="product-info">
+          <div class="product-name">
+            {{ product.name }}
+          </div>
+
+          <div class="product-price">
+            {{ product.price }} zł
+          </div>
+        </div>
+        <div class="product-add-remove">
+          <mat-icon>remove_circle_outline</mat-icon>
+          <div class="product-count">
+            0
+          </div>
+          <mat-icon>add_circle_outline</mat-icon>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <div class="add-product">
+    <mat-icon class="add-product-button">add</mat-icon>
+  </div>
+</div>

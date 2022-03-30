@@ -1,21 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectAllBooks } from '../_store/products/product.selectors';
 import { IProduct } from './models/product.model';
-
-const PRODUCTS: IProduct[] = [
-  {
-    id: 1, name: 'Burger', price: 30, thumbnail: 'burger.jpg'
-  },
-  {
-    id: 1, name: 'French Fries', price: 10, thumbnail: 'fries.jpg'
-  },
-  {
-    id: 1, name: 'Pizza', price: 45, thumbnail: 'pizza.jpg'
-  },
-  {
-    id: 1, name: 'Hot-dog', price: 15, thumbnail: 'hotdog.jpg'
-  }
-];
 
 @Component({
   selector: 'app-products',
@@ -23,12 +10,18 @@ const PRODUCTS: IProduct[] = [
   styleUrls: ['./products.component.less']
 })
 export class ProductsComponent implements OnInit {
+  public products$!: Observable<(IProduct | undefined)[]>;
+  constructor(private _store: Store<{products: IProduct[]}>) {
+    this.products$ = _store.select(selectAllBooks);
+   }
 
-  constructor() { }
+  public ngOnInit(): void {
+    this.getAllProducts();
+  }
 
-  ngOnInit(): void {}
-
-  getAllProducts(): Observable<IProduct[]> {
-    return of(PRODUCTS);
+  public getAllProducts(): void {
+    this._store.dispatch({
+      type: '[Product List/API] Get Product List'
+    });
   }
 }

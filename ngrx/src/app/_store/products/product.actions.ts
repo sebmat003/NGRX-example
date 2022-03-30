@@ -17,7 +17,14 @@ export const deleteProduct = createAction(
   props<{ productId: number }>()
 );
 
-export const getProductList = createAction(
-  '[Product List/API] Get Product List',
+export const getProductList = createAction('[Product List/API] Get Product List');
+
+export const productListLoadSuccessfully = createAction(
+  '[Product List/API] Product List Success',
   props<{ products: IProduct[] }>()
+);
+
+export const productListLoadFailure = createAction(
+  '[Product List/API] Product List Error',
+  props<{ error: any}>()
 );
