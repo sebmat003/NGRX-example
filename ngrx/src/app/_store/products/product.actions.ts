@@ -9,7 +9,7 @@ export const addProduct = createAction(
 
 export const editProduct = createAction(
   '[Product List/API] Edit Product',
-  props<{ update: Update<IProduct> }>()
+  props<{ product: IProduct }>()
 );
 
 export const deleteProduct = createAction(
@@ -17,7 +17,9 @@ export const deleteProduct = createAction(
   props<{ productId: number }>()
 );
 
-export const getProductList = createAction('[Product List/API] Get Product List');
+export const getProductList = createAction(
+  '[Product List/API] Get Product List'
+);
 
 export const productListLoadSuccessfully = createAction(
   '[Product List/API] Product List Success',
@@ -26,5 +28,5 @@ export const productListLoadSuccessfully = createAction(
 
 export const productListLoadFailure = createAction(
   '[Product List/API] Product List Error',
-  props<{ error: any}>()
+  props<{ error: any }>()
 );

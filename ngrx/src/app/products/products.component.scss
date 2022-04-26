@@ -1,4 +1,4 @@
-@gray: rgba(190,190,190, 0.3);
+$gray: rgba(190,190,190, 0.3);
 .products {
   width: 100%;
   display: flex;
@@ -6,7 +6,7 @@
   .product, .add-product {
     width: 15rem;
     height: 20rem;
-    box-shadow: 0 0 5px 5px @gray;
+    box-shadow: 0 0 5px 5px $gray;
     margin: 1rem;
     display: flex;
     transition: all 0.2s;
@@ -19,8 +19,8 @@
     justify-content: center;
     text-align: center;
     .add-product-button {
-      font-size: 3rem;
-      color: @gray;
+      transform: scale(3);
+      color: $gray;
       display: flex;
     }
   }

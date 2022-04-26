@@ -1,0 +1,30 @@
+<h2>{{ data ? 'Edit the product' : 'Add a new product'}}</h2>
+<mat-dialog-content [formGroup]="form">
+  <div class="product-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input formControlName="name" matInput placeholder="Name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input formControlName="price" matInput placeholder="Name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Thumbnail</mat-label>
+      <mat-select formControlName="thumbnail">
+        <mat-option *ngFor="let thumbnail of thumbnails" class="image-option" [value]="thumbnail">
+          <div class="centerize justify-between">
+            {{ thumbnail }}
+            <img class="image-preview" [src]="'assets/' + thumbnail">
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-end">
+  <button mat-button color="secondary" mat-dialog-close="false">Cancel</button>
+  <button mat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

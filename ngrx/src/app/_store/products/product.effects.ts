@@ -1,3 +1,5 @@
+import { Update } from '@ngrx/entity';
+import { IProduct } from './../../products/models/product.model';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
