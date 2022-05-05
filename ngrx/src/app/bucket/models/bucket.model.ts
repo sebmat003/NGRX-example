@@ -1,6 +1,6 @@
-import { IProductCount } from "src/app/products/models/product.model";
+import { IProductCount } from 'src/app/products/models/product.model';
 
 export interface IBucket {
-  products: IProductCount;
+  products: IProductCount[];
   overallPrice: number;
 }

@@ -1,1 +1,29 @@
-<p>bucket works!</p>
+<div class="bucket">
+  <ng-container *ngIf="(bucket$ | async) as bucket">
+    <div class="products">
+      <ng-container *ngIf="bucket.products && bucket.products.length > 0; else empty">
+        <div *ngFor="let product of bucket.products" class="product">
+          <img [src]="'/assets/' + product.product.thumbnail" alt="product thumbnail">
+          <div class="product-name">{{ product.product.name }}</div>
+          <div class="product-quantity">
+            <mat-icon (click)="bucketService.changeProductQuantity(product, -1)">remove_circle_outline</mat-icon>
+            <div class="product-count">
+              {{ product.count }}
+            </div>
+            <mat-icon (click)="bucketService.changeProductQuantity(product, 1)">add_circle_outline</mat-icon>
+          </div>
+          <div class="product-remover">
+            <mat-icon (click)="removeProduct(product)">delete</mat-icon>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="overall-price">
+      Total: {{ bucket.overallPrice }} zł
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #empty>
+  <p>Your Shopping Cart is empty</p>
+</ng-template>

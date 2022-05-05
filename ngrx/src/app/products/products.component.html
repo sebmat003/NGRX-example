@@ -1,6 +1,6 @@
 <div class="products">
   <ng-container *ngIf="(products$ | async) as products">
-    <div *ngFor="let product of products" class="product">
+    <div *ngFor="let product of products; let i = index" class="product">
       <ng-container *ngIf="product">
         <div class="product-actions">
           <mat-icon (click)="editProduct(product)">edit</mat-icon>
@@ -17,16 +17,19 @@
           </div>
         </div>
         <div class="product-add-remove">
-          <mat-icon>remove_circle_outline</mat-icon>
+          <mat-icon [class.hidden]="!(product | getBucketProductCount | async)"
+            (click)="changeProductQuantity(product, -1)">
+            remove_circle_outline
+          </mat-icon>
           <div class="product-count">
-            0
+            {{ product | getBucketProductCount | async}}
           </div>
-          <mat-icon>add_circle_outline</mat-icon>
+          <mat-icon (click)="changeProductQuantity(product, 1)">add_circle_outline</mat-icon>
         </div>
       </ng-container>
     </div>
   </ng-container>
-  <div class="add-product">
+  <div class="add-product" (click)="addProduct()">
     <mat-icon class="add-product-button">add</mat-icon>
   </div>
 </div>

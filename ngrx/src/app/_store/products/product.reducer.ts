@@ -17,10 +17,7 @@ export const productsReducer = createReducer(
   on(ProductActions.deleteProduct, (state, { productId }) =>
     adapter.removeOne(productId, state)
   ),
-  on(ProductActions.editProduct, (state, { product }) => {
-    console.log(product);
-    adapter.setOne(product, state);
-    console.log(state);
-    return state;
-  })
+  on(ProductActions.editProduct, (state, { product }) =>
+    adapter.updateOne({ id: product.id, changes: product }, state)
+  )
 );

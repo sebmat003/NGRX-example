@@ -1,0 +1,51 @@
+.bucket {
+  height: 75vh;
+  width: 25rem;
+  padding-left: 2rem;
+  border-left: 1px solid rgb(192, 192, 192);
+  .products {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    .product {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      width: 100%;
+      margin: 0.5rem 1rem;
+      border: 1px solid rgb(192, 192, 192);
+      img {
+        width: 3rem;
+        height: 3rem;
+      }
+      .product-name {
+        margin: 0 1rem;
+      }
+      .product-quantity {
+        display: flex;
+        align-items: center;
+        .product-count {
+          margin: 0 1rem;
+        }
+      }
+      .product-remover {
+        margin-left: 1rem;
+        opacity: 0.3;
+        transition: opacity 0.2s;
+        transform: translateY(2px);
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .overall-price {
+    font-weight: 500;
+    font-size: 1.25rem;
+    text-align: right;
+  }
+}

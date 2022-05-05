@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IProduct } from '../models/product.model';
 
-const PRODUCTS: IProduct[] = [
+export const PRODUCTS: IProduct[] = [
   {
     id: 1,
     name: 'Burger',
@@ -38,9 +38,5 @@ export class ProductsService {
 
   public getAllProducts(): Observable<IProduct[]> {
     return of(PRODUCTS);
-  }
-
-  public editProduct(product: Update<IProduct>): Observable<void> {
-    return of();
   }
 }

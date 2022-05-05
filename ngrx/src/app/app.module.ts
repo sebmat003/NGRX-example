@@ -1,3 +1,4 @@
+import { bucketReducer } from './_store/bucket/bucket.reducer';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { ProductEffects } from './_store/products/product.effects';
 import { productsReducer } from './_store/products/product.reducer';
 import { AddEditProductComponent } from './products/components/add-edit-product/add-edit-product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GetBucketProductCountPipe } from './products/pipes/getBucketProductCount.pipe';
 
 @NgModule({
   declarations: [
@@ -28,13 +30,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductsComponent,
     BucketComponent,
     AddEditProductComponent,
+    GetBucketProductCountPipe,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     CommonModule,
     AppRoutingModule,
-    StoreModule.forRoot({ products: productsReducer }),
+    StoreModule.forRoot({ products: productsReducer, bucket: bucketReducer }),
     EffectsModule.forRoot([ProductEffects]),
     StoreDevtoolsModule.instrument(),
     MatIconModule,
