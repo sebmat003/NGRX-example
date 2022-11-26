@@ -2,14 +2,13 @@ import { IProduct } from './../../models/product.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PRODUCT_THUMBNAILS } from '../../product-thumbnails.const';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { TForm } from 'src/app/_core/constants/form.type';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+interface ProductForm {
+  name: FormControl<string>;
+  price: FormControl<number>;
+  thumbnail: FormControl<string>;
+}
 
 @Component({
   selector: 'app-add-edit-product',
@@ -18,10 +17,19 @@ import { TForm } from 'src/app/_core/constants/form.type';
 })
 export class AddEditProductComponent implements OnInit {
   public thumbnails = [...PRODUCT_THUMBNAILS];
-  public form: TForm<Partial<IProduct>> = new FormGroup({
-    name: new FormControl('', { validators: [Validators.required] }),
-    price: new FormControl(0, { validators: [Validators.required] }),
-    thumbnail: new FormControl('', { validators: [Validators.required] }),
+  public form = new FormGroup<ProductForm>({
+    name: new FormControl('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    price: new FormControl(0, {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    thumbnail: new FormControl('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
   });
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IProduct,
@@ -35,9 +43,7 @@ export class AddEditProductComponent implements OnInit {
   }
 
   public setForm(): void {
-    Object.entries(this.data).forEach(([key, value]) => {
-      this.form.controls[key]?.setValue(value);
-    });
+    this.form.patchValue({ ...this.data });
   }
 
   public save(): void {
