@@ -57,7 +57,6 @@ export class ProductsComponent implements OnInit {
       .select(selectBucketProductById(product.id))
       .pipe(take(1))
       .subscribe((p) => {
-        console.log(p);
         const selectedProduct = p ? p : { count: 0, product: product };
         this.bucketService.changeProductQuantity(selectedProduct, counter);
       });
