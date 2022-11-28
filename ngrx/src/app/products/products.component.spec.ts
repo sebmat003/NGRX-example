@@ -1,25 +1,31 @@
-import { GetBucketProductCountPipe } from './pipes/getBucketProductCount.pipe';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
+import { IBucket } from '../bucket/models/bucket.model';
+import { BucketService } from '../bucket/services/bucket.service';
+import { bucketReducer } from '../_store/bucket/bucket.reducer';
+import { selectBucket } from '../_store/bucket/bucket.selectors';
+import * as ProductActions from './../_store/products/product.actions';
 import { productsReducer } from './../_store/products/product.reducer';
 import {
-  selectAllProducts,
   IProductsState,
+  selectAllProducts
 } from './../_store/products/product.selectors';
-import { of } from 'rxjs';
-import { IProduct } from './models/product.model';
-import { MatIconModule } from '@angular/material/icon';
-import * as ProductActions from './../_store/products/product.actions';
-import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
-import { ProductsService } from './services/products.service';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-
+import { IProduct, IProductCount } from './models/product.model';
+import { GetBucketProductCountPipe } from './pipes/getBucketProductCount.pipe';
 import { ProductsComponent } from './products.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ProductsService } from './services/products.service';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
-  let mockStore: MockStore<{ products: IProduct[] }>;
+  let mockStore: MockStore<{ products: IProduct[]; bucket: IBucket }>;
+  const mockBucketService = {
+    changeProductQuantity: () => undefined,
+  };
   const initialState: IProduct[] = [];
   let mockAllProductsSelector: MemoizedSelector<
     IProductsState,
@@ -48,14 +54,17 @@ describe('ProductsComponent', () => {
         ProductsService,
         provideMockStore<IProduct[]>({ initialState }),
         { provide: MatDialog, useValue: mockedDialog },
+        { provide: BucketService, useValue: mockBucketService },
       ],
       imports: [
-        StoreModule.forRoot({ products: productsReducer }),
+        StoreModule.forRoot({
+          products: productsReducer,
+          bucket: bucketReducer,
+        }),
         MatDialogModule,
         MatIconModule,
       ],
     }).compileComponents();
-
     mockStore = TestBed.get<Store>(Store);
     mockAllProductsSelector = mockStore.overrideSelector(selectAllProducts, [
       ...mockInitialProducts,
@@ -118,5 +127,43 @@ describe('ProductsComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(
       ProductActions.deleteProduct({ productId: mockInitialProducts[0].id })
     );
+  });
+
+  it('should add product quantity', () => {
+    const productCount: IProductCount = {
+      count: 0,
+      product: mockInitialProducts[0],
+    };
+    const selectBucketProductByIdSpy = jest
+      .spyOn(mockStore, 'select')
+      .mockReturnValue(of(productCount));
+    const changeProductQuantityServiceSpy = jest.spyOn(
+      mockBucketService,
+      'changeProductQuantity'
+    );
+    const plusIcon: HTMLElement = Array.from(
+      fixture.debugElement.nativeElement.querySelectorAll('mat-icon')
+    ).find((i: any) => i.textContent === 'add_circle_outline') as HTMLElement;
+    plusIcon.click();
+    expect(selectBucketProductByIdSpy).toHaveBeenCalled();
+    expect(changeProductQuantityServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should set count to 0 if product is not found in bucket', () => {
+    mockStore.select(selectBucket).subscribe(b => console.log(b));
+    const selectBucketProductByIdSpy = jest
+      .spyOn(mockStore, 'select')
+      .mockReturnValue(of(undefined));
+    const changeProductQuantityServiceSpy = jest.spyOn(
+      mockBucketService,
+      'changeProductQuantity'
+    );
+    component.changeProductQuantity(mockInitialProducts[0], -1);
+    expect(selectBucketProductByIdSpy).toHaveBeenCalled();
+    const params = {
+      product: mockInitialProducts[0],
+      count: 0,
+    };
+    expect(changeProductQuantityServiceSpy).toHaveBeenCalledWith(params, -1);
   });
 });

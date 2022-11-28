@@ -1,7 +1,6 @@
-import { IProduct } from 'src/app/products/models/product.model';
-import { IProductCount } from 'src/app/products/models/product.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { IProductCount } from 'src/app/products/models/product.model';
 import * as BucketActions from '../../_store/bucket/bucket.actions';
 
 @Injectable({
@@ -18,7 +17,6 @@ export class BucketService {
         count: product.count + counter,
         product: product.product,
       };
-      console.log(updatedProduct);
       this._store.dispatch(
         BucketActions.changeProductQuantity({ product: updatedProduct })
       );
