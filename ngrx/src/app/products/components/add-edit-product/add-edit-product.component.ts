@@ -1,8 +1,8 @@
-import { IProduct } from './../../models/product.model';
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PRODUCT_THUMBNAILS } from '../../product-thumbnails.const';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IProduct } from './../../models/product.model';
 
 interface ProductForm {
   name: FormControl<string>;
@@ -23,7 +23,7 @@ export class AddEditProductComponent implements OnInit {
       nonNullable: true,
     }),
     price: new FormControl(0, {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.min(1), Validators.max(1000)],
       nonNullable: true,
     }),
     thumbnail: new FormControl('', {

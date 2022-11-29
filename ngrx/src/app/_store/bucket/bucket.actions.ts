@@ -1,15 +1,24 @@
-import { IProductCount } from 'src/app/products/models/product.model';
-import { props, createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { IProduct, IProductCount } from 'src/app/products/models/product.model';
 
-export const addProductToBucket = createAction(
-  '[Bucket] Add Product',
+export const addProductCountToBucket = createAction(
+  '[Bucket] Add ProductCount',
   props<{ product: IProductCount }>()
 );
-export const removeProductFromBucket = createAction(
-  '[Bucket] Remove Product',
+export const removeProductCountFromBucket = createAction(
+  '[Bucket] Remove ProductCount',
   props<{ product: IProductCount }>()
 );
-export const changeProductQuantity = createAction(
-  '[Bucket] Change Product Quantity',
+export const changeProductCountQuantity = createAction(
+  '[Bucket] Change ProductCount Quantity',
   props<{ product: IProductCount }>()
 );
+export const editProductInBucket = createAction(
+  '[Bucket] Edit Product',
+  props<{ product: IProduct }>() 
+);
+export const deleteProductFromBucket = createAction(
+  '[Bucket] Delete Product',
+  props<{ productId: number }>() 
+);
+

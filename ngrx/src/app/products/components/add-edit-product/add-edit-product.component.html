@@ -8,7 +8,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Price</mat-label>
-      <input formControlName="price" matInput placeholder="Name">
+      <input formControlName="price" type="number" matInput placeholder="Price">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -25,6 +25,6 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-end">
-  <button mat-button color="secondary" mat-dialog-close="false">Cancel</button>
+  <button mat-button color="secondary" mat-dialog-close>Cancel</button>
   <button mat-button color="primary" [disabled]="form.invalid" (click)="save()">Save</button>
 </mat-dialog-actions>

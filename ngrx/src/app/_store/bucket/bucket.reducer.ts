@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { IProductCount } from 'src/app/products/models/product.model';
 import { IBucket } from './../../bucket/models/bucket.model';
 import * as BucketActions from './bucket.actions';
 export const initialBucketState: IBucket = {
@@ -8,17 +9,17 @@ export const initialBucketState: IBucket = {
 
 export const bucketReducer = createReducer(
   initialBucketState,
-  on(BucketActions.addProductToBucket, (state, { product }) => ({
+  on(BucketActions.addProductCountToBucket, (state, { product }) => ({
     ...state,
     products: [...state.products, product],
-    overallPrice: state.overallPrice + (product.product.price * product.count),
+    overallPrice: state.overallPrice + product.product.price * product.count,
   })),
-  on(BucketActions.removeProductFromBucket, (state, { product }) => ({
+  on(BucketActions.removeProductCountFromBucket, (state, { product }) => ({
     ...state,
     products: state.products.filter((p) => p.product.id !== product.product.id),
-    overallPrice: state.overallPrice - (product.product.price * product.count),
+    overallPrice: state.overallPrice - product.product.price * product.count,
   })),
-  on(BucketActions.changeProductQuantity, (state, { product }) => {
+  on(BucketActions.changeProductCountQuantity, (state, { product }) => {
     const oldProduct = state.products.filter(
       (p) => product.product.id === p.product.id
     )[0];
@@ -33,6 +34,41 @@ export const bucketReducer = createReducer(
         state.overallPrice -
         (oldProduct ? oldProduct.count * oldProduct.product.price : 0) +
         product.count * product.product.price,
+    };
+  }),
+  on(BucketActions.editProductInBucket, (state, { product }) => {
+    const productCount: IProductCount = {
+      ...state.products.filter((p) => product.id === p.product.id)[0],
+    };
+    const updatedProducts = [...state.products].filter(
+      (p) => p.product.id !== productCount.product.id
+    );
+    if (!productCount || !productCount.product) {
+      return { ...state };
+    }
+    const modifiedProductCount = { ...productCount };
+    modifiedProductCount.product = product;
+    updatedProducts.push(modifiedProductCount);
+    return {
+      ...state,
+      products: updatedProducts,
+      overallPrice:
+        state.overallPrice -
+        productCount.count * productCount.product.price +
+        modifiedProductCount.count * modifiedProductCount.product.price,
+    };
+  }),
+  on(BucketActions.deleteProductFromBucket, (state, { productId }) => {
+    const productCountToDelete = state.products.filter(
+      (p) => p.product.id === productId
+    )[0];
+    if (!productCountToDelete || !productCountToDelete.product) {
+      return { ...state };
+    }
+    return {
+      ...state,
+      products: state.products.filter((p) => p.product.id !== productId),
+      overallPrice: state.overallPrice - productCountToDelete.product.price * productCountToDelete.count,
     };
   })
 );

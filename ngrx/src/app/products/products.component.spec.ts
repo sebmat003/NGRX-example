@@ -7,7 +7,6 @@ import { of } from 'rxjs';
 import { IBucket } from '../bucket/models/bucket.model';
 import { BucketService } from '../bucket/services/bucket.service';
 import { bucketReducer } from '../_store/bucket/bucket.reducer';
-import { selectBucket } from '../_store/bucket/bucket.selectors';
 import * as ProductActions from './../_store/products/product.actions';
 import { productsReducer } from './../_store/products/product.reducer';
 import {
@@ -150,7 +149,6 @@ describe('ProductsComponent', () => {
   });
 
   it('should set count to 0 if product is not found in bucket', () => {
-    mockStore.select(selectBucket).subscribe(b => console.log(b));
     const selectBucketProductByIdSpy = jest
       .spyOn(mockStore, 'select')
       .mockReturnValue(of(undefined));

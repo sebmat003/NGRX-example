@@ -11,14 +11,14 @@ export class BucketService {
 
   public changeProductQuantity(product: IProductCount, counter: number): void {
     if (product.count + counter === 0) {
-      this._store.dispatch(BucketActions.removeProductFromBucket({ product }));
+      this._store.dispatch(BucketActions.removeProductCountFromBucket({ product }));
     } else {
       const updatedProduct = {
         count: product.count + counter,
         product: product.product,
       };
       this._store.dispatch(
-        BucketActions.changeProductQuantity({ product: updatedProduct })
+        BucketActions.changeProductCountQuantity({ product: updatedProduct })
       );
     }
   }

@@ -1,17 +1,17 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { filter, Observable, of, switchMap, take } from 'rxjs';
+import { IBucket } from './../bucket/models/bucket.model';
 import { BucketService } from './../bucket/services/bucket.service';
 import {
   selectBucket,
-  selectBucketProductById,
+  selectBucketProductById
 } from './../_store/bucket/bucket.selectors';
-import { IBucket } from './../bucket/models/bucket.model';
+import * as ProductActions from './../_store/products/product.actions';
 import { selectAllProducts } from './../_store/products/product.selectors';
 import { AddEditProductComponent } from './components/add-edit-product/add-edit-product.component';
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, take } from 'rxjs';
 import { IProduct } from './models/product.model';
-import * as ProductActions from './../_store/products/product.actions';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-products',
@@ -40,12 +40,9 @@ export class ProductsComponent implements OnInit {
     });
     dialogRef
       .afterClosed()
-      .pipe(take(1))
-      .subscribe((result: IProduct) => {
-        if (result) {
-          this._store.dispatch(ProductActions.editProduct({ product: result }));
-        }
-      });
+      .pipe(filter(Boolean),
+       switchMap((result: IProduct) => of(this._store.dispatch(ProductActions.editProduct({ product: result })))))
+      .subscribe();
   }
 
   public deleteProduct(id: number): void {
@@ -65,13 +62,10 @@ export class ProductsComponent implements OnInit {
   public addProduct(): void {
     const dialogRef = this._dialog.open(AddEditProductComponent);
     dialogRef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe((result: IProduct) => {
-        if (result) {
-          this._store.dispatch(ProductActions.addProduct({ product: result }));
-        }
-      });
+    .afterClosed()
+      .pipe(filter(Boolean),
+       switchMap((result: IProduct) => of(this._store.dispatch(ProductActions.addProduct({ product: result })))))
+      .subscribe();
   }
 
   public getAllProducts(): void {
