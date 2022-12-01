@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import * as BucketActions from '../_store/bucket/bucket.actions';
-import { selectBucket } from '../_store/bucket/bucket.selectors';
-import { bucketReducer } from './../_store/bucket/bucket.reducer';
+import * as BucketActions from '../_store/bucket/actions/bucket.actions';
+import { bucketReducer } from '../_store/bucket/reducer/bucket.reducer';
+import { selectBucket } from '../_store/bucket/selectors/bucket.selectors';
 import { BucketComponent } from './bucket.component';
 import { IBucket } from './models/bucket.model';
-import { BucketService } from './services/bucket.service';
+import { BucketService } from './services/bucketService/bucket.service';
 
 
 describe('BucketComponent', () => {

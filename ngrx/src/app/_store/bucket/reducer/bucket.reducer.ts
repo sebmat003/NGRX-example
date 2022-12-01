@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { IProductCount } from 'src/app/products/models/product.model';
-import { IBucket } from './../../bucket/models/bucket.model';
-import * as BucketActions from './bucket.actions';
+import { IBucket } from '../../../bucket/models/bucket.model';
+import * as BucketActions from '../actions/bucket.actions';
 export const initialBucketState: IBucket = {
   products: [],
   overallPrice: 0,
@@ -23,10 +23,9 @@ export const bucketReducer = createReducer(
     const oldProduct = state.products.filter(
       (p) => product.product.id === p.product.id
     )[0];
-    const updatedProducts = state.products.filter(
-      (p) => p.product.id !== product.product.id
-    );
-    updatedProducts.push(product);
+    const updatedProducts = [...state.products];
+    const index = updatedProducts.indexOf(oldProduct);
+    updatedProducts[index] = product;
     return {
       ...state,
       products: updatedProducts,

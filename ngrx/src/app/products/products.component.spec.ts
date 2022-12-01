@@ -5,18 +5,18 @@ import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { IBucket } from '../bucket/models/bucket.model';
-import { BucketService } from '../bucket/services/bucket.service';
-import { bucketReducer } from '../_store/bucket/bucket.reducer';
-import * as ProductActions from './../_store/products/product.actions';
-import { productsReducer } from './../_store/products/product.reducer';
+import { BucketService } from '../bucket/services/bucketService/bucket.service';
+import { bucketReducer } from '../_store/bucket/reducer/bucket.reducer';
 import {
   IProductsState,
   selectAllProducts
-} from './../_store/products/product.selectors';
+} from '../_store/products/selectors/product.selectors';
+import * as ProductActions from './../_store/products/actions/product.actions';
+import { productsReducer } from './../_store/products/reducer/product.reducer';
 import { IProduct, IProductCount } from './models/product.model';
 import { GetBucketProductCountPipe } from './pipes/getBucketProductCount.pipe';
 import { ProductsComponent } from './products.component';
-import { ProductsService } from './services/products.service';
+import { ProductsService } from './services/productsService/products.service';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;

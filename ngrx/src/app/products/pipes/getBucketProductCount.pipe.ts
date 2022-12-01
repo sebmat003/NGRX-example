@@ -1,8 +1,8 @@
-import { selectBucketProductById } from './../../_store/bucket/bucket.selectors';
-import { Store } from '@ngrx/store';
-import { IProduct } from 'src/app/products/models/product.model';
 import { Pipe, PipeTransform } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
+import { IProduct } from 'src/app/products/models/product.model';
+import { selectBucketProductById } from '../../_store/bucket/selectors/bucket.selectors';
 
 @Pipe({
   name: 'getBucketProductCount',

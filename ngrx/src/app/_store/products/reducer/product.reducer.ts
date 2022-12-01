@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { IProduct } from 'src/app/products/models/product.model';
-import * as ProductActions from './product.actions';
+import * as ProductActions from './../actions/product.actions';
 
 export const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>();
 export const initialState: EntityState<IProduct> = adapter.getInitialState([]);

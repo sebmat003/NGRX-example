@@ -1,20 +1,20 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
-import { BucketService } from './bucket/services/bucket.service';
-import { ProductsService } from './products/services/products.service';
-import { bucketReducer } from './_store/bucket/bucket.reducer';
-import { productsReducer } from './_store/products/product.reducer';
-import { StoreModule } from '@ngrx/store';
-import { BucketComponent } from './bucket/bucket.component';
-import { ProductsComponent } from './products/products.component';
-import { TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 import { AppComponent } from './app.component';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { BucketComponent } from './bucket/bucket.component';
+import { BucketService } from './bucket/services/bucketService/bucket.service';
+import { ProductsComponent } from './products/products.component';
+import { ProductsService } from './products/services/productsService/products.service';
+import { bucketReducer } from './_store/bucket/reducer/bucket.reducer';
+import { productsReducer } from './_store/products/reducer/product.reducer';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

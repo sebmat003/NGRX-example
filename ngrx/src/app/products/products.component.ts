@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { filter, Observable, of, switchMap, take } from 'rxjs';
-import { IBucket } from './../bucket/models/bucket.model';
-import { BucketService } from './../bucket/services/bucket.service';
 import {
   selectBucket,
   selectBucketProductById
-} from './../_store/bucket/bucket.selectors';
-import * as ProductActions from './../_store/products/product.actions';
-import { selectAllProducts } from './../_store/products/product.selectors';
+} from '../_store/bucket/selectors/bucket.selectors';
+import { selectAllProducts } from '../_store/products/selectors/product.selectors';
+import { IBucket } from './../bucket/models/bucket.model';
+import { BucketService } from './../bucket/services/bucketService/bucket.service';
+import * as ProductActions from './../_store/products/actions/product.actions';
 import { AddEditProductComponent } from './components/add-edit-product/add-edit-product.component';
 import { IProduct } from './models/product.model';
 

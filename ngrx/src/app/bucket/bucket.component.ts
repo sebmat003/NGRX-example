@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IProductCount } from 'src/app/products/models/product.model';
-import * as BucketActions from '../_store/bucket/bucket.actions';
-import { selectBucket } from './../_store/bucket/bucket.selectors';
+import * as BucketActions from '../_store/bucket/actions/bucket.actions';
+import { selectBucket } from '../_store/bucket/selectors/bucket.selectors';
 import { IBucket } from './models/bucket.model';
-import { BucketService } from './services/bucket.service';
+import { BucketService } from './services/bucketService/bucket.service';
 
 @Component({
   selector: 'app-bucket',

@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IBucket } from './../../bucket/models/bucket.model';
+import { IBucket } from '../../../bucket/models/bucket.model';
 export const selectBucketFeature = createFeatureSelector<IBucket>('bucket');
 export const selectBucket = createSelector(
   selectBucketFeature,
