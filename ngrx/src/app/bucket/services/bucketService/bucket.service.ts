@@ -19,9 +19,7 @@ export class BucketService {
       };
       if (product.count === 0) {
         this._store.dispatch(BucketActions.addProductCountToBucket({ product: updatedProduct}));
-        console.log('add', updatedProduct)
       } else {
-        console.log('change count', updatedProduct)
         this._store.dispatch(
           BucketActions.changeProductCountQuantity({ product: updatedProduct })
         );
