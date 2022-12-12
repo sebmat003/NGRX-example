@@ -39,12 +39,15 @@ export const bucketReducer = createReducer(
     const productCount: IProductCount = {
       ...state.products.filter((p) => product.id === p.product.id)[0],
     };
-    const updatedProducts = [...state.products].filter(
-      (p) => p.product.id !== productCount.product.id
-    );
+
     if (!productCount || !productCount.product) {
       return { ...state };
     }
+    
+    const updatedProducts = [...state.products].filter(
+      (p) => p.product.id !== productCount.product.id
+    );
+
     const modifiedProductCount = { ...productCount };
     modifiedProductCount.product = product;
     updatedProducts.push(modifiedProductCount);
